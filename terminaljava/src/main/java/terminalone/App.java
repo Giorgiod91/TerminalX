@@ -10,8 +10,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+
 
 public class App extends Application {
 
@@ -25,6 +32,7 @@ public class App extends Application {
         // Initialize the TextArea
         outputArea = new TextArea();
         outputArea.setEditable(false); 
+        outputArea.setStyle("-fx-background-color: transparent;");
 
          // Initialize the input field (TextField)
         inputField = new TextField();
@@ -49,15 +57,24 @@ public class App extends Application {
         Scene scene = new Scene(root, 800, 600); 
 
 
-        // import image
-       //Image image = new Image("F:\\APPS\\Terminal\\terminaljava\\src\\main\\resources\\images\\space.jpg");
+        // Image 
+        Image image = new Image(getClass().getResourceAsStream("/images/space.jpg"));
+
+       
 
 
           // adding BackgroundImage through javafx scene
 
 
-       //BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, 
-        //BackgroundRepeat.NO_REPEAT,  BackgroundPosition.CENTER,  BackgroundSize.DEFAULT);
+          BackgroundImage backgroundImage = new BackgroundImage(image, 
+          BackgroundRepeat.NO_REPEAT, 
+          BackgroundRepeat.NO_REPEAT, 
+          BackgroundPosition.CENTER, 
+          new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, true, false)
+      );
+
+       // Set the background of the StackPane
+        root.setBackground(new Background(backgroundImage));
 
 
        
