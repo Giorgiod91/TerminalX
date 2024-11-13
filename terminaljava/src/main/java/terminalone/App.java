@@ -30,6 +30,8 @@ public class App extends Application {
         inputField = new TextField();
         inputField.setPromptText("Enter command here...");
 
+        
+
           // Button to show the current directory
           Button directoryButton = new Button("Show Directory");
           directoryButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -45,6 +47,20 @@ public class App extends Application {
 
         // Set up the Scene 
         Scene scene = new Scene(root, 800, 600); 
+
+
+        // import image
+       //Image image = new Image("F:\\APPS\\Terminal\\terminaljava\\src\\main\\resources\\images\\space.jpg");
+
+
+          // adding BackgroundImage through javafx scene
+
+
+       //BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, 
+        //BackgroundRepeat.NO_REPEAT,  BackgroundPosition.CENTER,  BackgroundSize.DEFAULT);
+
+
+       
 
         // Set the title of the stage (window)
         primaryStage.setTitle("Terminal Application");
