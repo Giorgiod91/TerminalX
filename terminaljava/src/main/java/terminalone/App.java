@@ -4,7 +4,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
@@ -24,12 +27,21 @@ public class App extends Application {
         outputArea.setEditable(false); 
 
          // Initialize the input field (TextField)
-         inputField = new TextField();
-         inputField.setPromptText("Enter command here...");
-        
+        inputField = new TextField();
+        inputField.setPromptText("Enter command here...");
+
+          // Button to show the current directory
+          Button directoryButton = new Button("Show Directory");
+          directoryButton.setOnAction(new EventHandler<ActionEvent>() {
+              @Override
+              public void handle(ActionEvent event) {
+                  ShowCurrentDirectory();  // Show the current directory when button is clicked
+              }
+          });
+
         // Create a layout 
         StackPane root = new StackPane();
-        root.getChildren().addAll(outputArea, inputField); // Add the TextArea 
+        root.getChildren().addAll(outputArea, inputField, directoryButton); // Add the TextArea 
 
         // Set up the Scene 
         Scene scene = new Scene(root, 800, 600); 
@@ -55,6 +67,13 @@ public class App extends Application {
 
         CreateDirectory(userInput);
         inputField.clear();
+    }
+
+    
+      // Method to show the current directory
+      public void ShowCurrentDirectory() {
+        Path currentDirectory = Path.of("").toAbsolutePath(); // Get the current working directory
+        outputArea.appendText("Current Directory: " + currentDirectory.toString() + "\n");
     }
 
     //method to create a directory
