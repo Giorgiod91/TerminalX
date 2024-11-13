@@ -1,5 +1,7 @@
 package terminalone;
 
+import java.nio.file.Path;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
@@ -7,6 +9,8 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class App extends Application {
+
+    private String userInput = "";
 
     private TextArea outputArea;
 
@@ -33,10 +37,32 @@ public class App extends Application {
         primaryStage.show();
     }
 
+
+    // get the user input with Scanner 
+
+    public String GetUserInput(){
+
+
+        return userInput;
+    }
+
+    //method to create a directory
+
+    public void CreateDirectory(){
+        var NameOfFolder =  GetUserInput();
+        var path = Path.of("placeholder");
+        //::TODO: Create the path depending on user input
+
+    }
+
+
+
     public static void main(String[] args) {
      
         launch(args);
     }
+
+
 }
 
 
