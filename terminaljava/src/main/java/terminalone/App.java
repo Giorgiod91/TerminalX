@@ -1,28 +1,35 @@
 package terminalone;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class App extends Application {
 
-    private String userInput = "";
+   
 
     private TextArea outputArea;
+    private TextField inputField;
 
     @Override
     public void start(Stage primaryStage) {
         // Initialize the TextArea
         outputArea = new TextArea();
         outputArea.setEditable(false); 
+
+         // Initialize the input field (TextField)
+         inputField = new TextField();
+         inputField.setPromptText("Enter command here...");
         
         // Create a layout 
         StackPane root = new StackPane();
-        root.getChildren().add(outputArea); // Add the TextArea 
+        root.getChildren().addAll(outputArea, inputField); // Add the TextArea 
 
         // Set up the Scene 
         Scene scene = new Scene(root, 800, 600); 
@@ -40,18 +47,28 @@ public class App extends Application {
 
     // get the user input with Scanner 
 
-    public String GetUserInput(){
+    public void GetUserInput(){
+        // get the input with from the TextField
+        String userInput = inputField.getText();
+        //show the input from the TextField
+        outputArea.appendText("User entered: " + userInput + "\n");
 
-
-        return userInput;
+        CreateDirectory(userInput);
+        inputField.clear();
     }
 
     //method to create a directory
 
-    public void CreateDirectory(){
-        var NameOfFolder =  GetUserInput();
-        var path = Path.of("placeholder");
-        //::TODO: Create the path depending on user input
+    public void CreateDirectory(String directoryName){
+        try {
+            // create directory
+            var path = Path.of(directoryName);
+            Files.createDirectories(path);
+            
+        } catch (Exception e) {
+            outputArea.appendText("failed to create" + directoryName);
+        }
+       
 
     }
 
