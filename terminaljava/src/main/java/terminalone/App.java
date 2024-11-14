@@ -26,6 +26,9 @@ public class App extends Application {
 
     private TextArea outputArea;
     private TextField inputField;
+    
+    //booleans
+    private boolean buttonClick = false;
 
     @Override
     public void start(Stage primaryStage) {
@@ -38,6 +41,11 @@ public class App extends Application {
         inputField = new TextField();
         inputField.setPromptText("Enter command here...");
 
+       
+        
+
+        //call welcome method
+        Welcome();
         
 
           // Button to show the current directory
@@ -45,9 +53,31 @@ public class App extends Application {
           directoryButton.setOnAction(new EventHandler<ActionEvent>() {
               @Override
               public void handle(ActionEvent event) {
-                  ShowCurrentDirectory();  // Show the current directory when button is clicked
+                outputArea.clear();
+                    
+                
+                    for(int i = 0; i < 8; i++){
+                       
+                            outputArea.appendText("...");
+                           
+
+                        }
+                            ShowCurrentDirectory();  // Show the current directory when button is clicked
+
+                        
+                        
+                        
+                       
+
+                    }
+                    
+                  
+                  
+                 
               }
-          });
+          );
+
+        
 
         // Create a layout 
         StackPane root = new StackPane();
@@ -67,7 +97,8 @@ public class App extends Application {
 
 
           BackgroundImage backgroundImage = new BackgroundImage(image, 
-          BackgroundRepeat.NO_REPEAT, 
+
+          BackgroundRepeat.NO_REPEAT,
           BackgroundRepeat.NO_REPEAT, 
           BackgroundPosition.CENTER, 
           new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, true, false)
@@ -106,7 +137,8 @@ public class App extends Application {
       // Method to show the current directory
       public void ShowCurrentDirectory() {
         Path currentDirectory = Path.of("").toAbsolutePath(); // Get the current working directory
-        outputArea.appendText("Current Directory: " + currentDirectory.toString() + "\n");
+        outputArea.appendText(currentDirectory.toString() + "\n");
+        outputArea.setStyle("-fx-font-size: 15px; -fx-text-fill: pink; -fx-font-weight: bold;");
     }
 
     //method to create a directory
@@ -121,6 +153,15 @@ public class App extends Application {
             outputArea.appendText("failed to create" + directoryName);
         }
        
+
+
+        
+    }
+
+    //welcome method
+    public void Welcome(){
+        outputArea.appendText("Welcome to TermialX");
+        outputArea.setStyle("-fx-font-size: 25px; -fx-text-fill: pink; -fx-font-weight: bold;");
 
     }
 
