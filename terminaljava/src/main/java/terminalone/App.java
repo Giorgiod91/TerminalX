@@ -17,6 +17,7 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import oshi.SystemInfo;
@@ -96,14 +97,34 @@ public class App extends Application {
                   
                  
               }
+
           );
+
+
+                // Image // Load the image
+    Image image = new Image(getClass().getResourceAsStream("/images/space.jpg"));
+
+// Create a BackgroundImage with appropriate scaling
+    BackgroundImage backgroundImage = new BackgroundImage(image, 
+    BackgroundRepeat.NO_REPEAT,        
+    BackgroundRepeat.NO_REPEAT,        
+    BackgroundPosition.CENTER,        
+    new BackgroundSize(100.0, 100.0, true, true, true, false) 
+        );
+
+
+
+
+
         //button layout 
         VBox buttonLayout = new VBox(10);  
         buttonLayout.setStyle("-fx-alignment: center; -fx-padding: 10; -fx-background-color: #f0f0f0;");
         buttonLayout.getChildren().addAll(CpuShowCase, directoryButton);
 
-        VBox root = new VBox(20);  
-        root.setStyle("-fx-background-color: transparent;");
+        VBox root = new VBox(20);       
+        root.setBackground(new Background(backgroundImage));
+        root.setStyle("");
+
         root.getChildren().addAll(outputArea, inputField, buttonLayout, CpuShowCase);
 
        
@@ -112,33 +133,28 @@ public class App extends Application {
       
 
         // Set up the Scene 
+        //Scene scene = new Scene(root, 800, 600); 
+        //scene.setBackground(new Background(backgroundImage));
+
+        StackPane backgroundPane = new StackPane();
+        backgroundPane.setBackground(new Background(backgroundImage));
+        backgroundPane.setPrefSize(800, 600); // Set the same size as the scene
+        root.getChildren().add(backgroundPane);
+              
+        // Set up the Scene
         Scene scene = new Scene(root, 800, 600); 
 
 
-        // Image 
-        Image image = new Image(getClass().getResourceAsStream("/images/space.jpg"));
-
-        
-
-       
 
 
-          // adding BackgroundImage through javafx scene
 
 
-          BackgroundImage backgroundImage = new BackgroundImage(image, 
-
-          BackgroundRepeat.NO_REPEAT,
-          BackgroundRepeat.NO_REPEAT, 
-          BackgroundPosition.CENTER, 
-          new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, true, false)
-      );
-
-       // Set the background of the StackPane
-        root.setBackground(new Background(backgroundImage));
 
 
-       
+
+
+        System.out.println(getClass().getResource("/images/space.jpg"));
+
 
         // Set the title of the stage (window)
         primaryStage.setTitle("Terminal Application");
