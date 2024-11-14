@@ -29,6 +29,14 @@ public class App extends Application {
 
     private TextArea outputArea;
     private TextField inputField;
+
+
+
+    private long[] oldTicks;
+
+
+
+    private Thread cpuMonitorThread;
     
     //booleans
     private boolean buttonClick = false;
@@ -48,7 +56,12 @@ public class App extends Application {
         // button to start cpu usage method
 
         Button CpuShowCase = new Button("Cpu Usage");
-        CpuShowCase.setOnAction(event -> ShowCpuUsage());
+        CpuShowCase.setOnAction(event -> startCpuUsageMonitoring());
+
+        // button to stop Cpu monitoring
+        //Button StopCpushowCase = new Button("Stop");
+       // CpuShowCase.setOnAction(event -> stopCpuUsageMonitoring());
+
 
         //call welcome method
         Welcome();
@@ -138,16 +151,59 @@ public class App extends Application {
     }
 
     // showcase CPU usage
-    public void ShowCpuUsage() {
-        SystemInfo si = new SystemInfo();
-        CentralProcessor processor = si.getHardware().getProcessor();
-        double cpuLoad = processor.getSystemCpuLoadBetweenTicks(null) * 100;
-        System.out.printf("Real-Time System CPU Load: %.2f%%%n", cpuLoad);
-
-
-
-            
+    // Periodically show CPU usage
+    public void startCpuUsageMonitoring() {
+        // Start a new thread to update CPU usage periodically
+        new Thread(() -> {
+            while (true) {
+                try {
+                    ShowCpuUsage();
+                    Thread.sleep(1000); // Delay 1 second between updates
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
+
+
+    
+
+
+        
+
+    
+
+    // Show CPU usage
+    public void ShowCpuUsage() {
+        try {
+            SystemInfo si = new SystemInfo();
+            CentralProcessor processor = si.getHardware().getProcessor();
+
+            // Initialize oldTicks if it's the first call
+            if (oldTicks == null) {
+                oldTicks = processor.getSystemCpuLoadTicks();
+            }
+
+            // Get the current CPU load between old and new ticks
+            double cpuLoad = processor.getSystemCpuLoadBetweenTicks(oldTicks) * 100;
+
+            // Update oldTicks to the latest CPU load ticks for the next call
+            oldTicks = processor.getSystemCpuLoadTicks();
+
+            // Display the CPU usage
+            outputArea.appendText(String.format("Real-Time CPU Load: %.2f%%%n", cpuLoad));
+        } catch (Exception e) {
+            outputArea.appendText("Error while fetching CPU usage: " + e.getMessage() + "\n");
+        }
+    }
+
+    
+
+
+ 
+
+    
 
 
 
