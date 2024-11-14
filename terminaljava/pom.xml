@@ -29,6 +29,13 @@
             <version>21</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.oshi</groupId>
+            <artifactId>oshi-core</artifactId>
+            <version>6.6.5</version>
+        </dependency>
+
+
         <!-- JUnit for Testing -->
         <dependency>
             <groupId>junit</groupId>

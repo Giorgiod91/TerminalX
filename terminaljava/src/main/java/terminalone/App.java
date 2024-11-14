@@ -1,5 +1,6 @@
 package terminalone;
 
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -16,8 +17,10 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import oshi.SystemInfo;
+import oshi.hardware.CentralProcessor;
 
 
 public class App extends Application {
@@ -42,7 +45,10 @@ public class App extends Application {
         inputField.setPromptText("Enter command here...");
 
        
-        
+        // button to start cpu usage method
+
+        Button CpuShowCase = new Button("Cpu Usage");
+        CpuShowCase.setOnAction(event -> ShowCpuUsage());
 
         //call welcome method
         Welcome();
@@ -63,6 +69,8 @@ public class App extends Application {
 
                         }
                             ShowCurrentDirectory();  // Show the current directory when button is clicked
+                         
+                            
 
                         
                         
@@ -76,12 +84,19 @@ public class App extends Application {
                  
               }
           );
+        //button layout 
+        VBox buttonLayout = new VBox(10);  
+        buttonLayout.setStyle("-fx-alignment: center; -fx-padding: 10; -fx-background-color: #f0f0f0;");
+        buttonLayout.getChildren().addAll(CpuShowCase, directoryButton);
 
+        VBox root = new VBox(20);  
+        root.setStyle("-fx-background-color: transparent;");
+        root.getChildren().addAll(outputArea, inputField, buttonLayout, CpuShowCase);
+
+       
         
 
-        // Create a layout 
-        StackPane root = new StackPane();
-        root.getChildren().addAll(outputArea, inputField, directoryButton); // Add the TextArea 
+      
 
         // Set up the Scene 
         Scene scene = new Scene(root, 800, 600); 
@@ -89,6 +104,8 @@ public class App extends Application {
 
         // Image 
         Image image = new Image(getClass().getResourceAsStream("/images/space.jpg"));
+
+        
 
        
 
@@ -119,6 +136,19 @@ public class App extends Application {
         // Show the stage (this opens the window)
         primaryStage.show();
     }
+
+    // showcase CPU usage
+    public void ShowCpuUsage() {
+        SystemInfo si = new SystemInfo();
+        CentralProcessor processor = si.getHardware().getProcessor();
+        double cpuLoad = processor.getSystemCpuLoadBetweenTicks(null) * 100;
+        System.out.printf("Real-Time System CPU Load: %.2f%%%n", cpuLoad);
+
+
+
+            
+    }
+
 
 
     // get the user input with Scanner 
