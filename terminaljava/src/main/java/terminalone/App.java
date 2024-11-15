@@ -44,14 +44,35 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+
+
+
+        
+                // Image // Load the image
+    Image image = new Image(getClass().getResourceAsStream("/images/space.jpg"));
+
+    // Create a BackgroundImage with appropriate scaling
+        BackgroundImage backgroundImage = new BackgroundImage(image, 
+        BackgroundRepeat.NO_REPEAT,        
+        BackgroundRepeat.NO_REPEAT,        
+        BackgroundPosition.CENTER,        
+        new BackgroundSize(100.0, 100.0, true, true, true, false) 
+            );
+
+
+
+
         // Initialize the TextArea
         outputArea = new TextArea();
         outputArea.setEditable(false); 
-        outputArea.setStyle("-fx-background-color: transparent;");
+        outputArea.setStyle("-fx-background-color: transparent; ");
+        outputArea.setBackground(new Background(backgroundImage));
 
          // Initialize the input field (TextField)
         inputField = new TextField();
         inputField.setPromptText("Enter command here...");
+        inputField.setStyle("-fx-text-fill: white");
+        inputField.setBackground(new Background(backgroundImage));
 
        
         // button to start cpu usage method
@@ -101,16 +122,6 @@ public class App extends Application {
           );
 
 
-                // Image // Load the image
-    Image image = new Image(getClass().getResourceAsStream("/images/space.jpg"));
-
-// Create a BackgroundImage with appropriate scaling
-    BackgroundImage backgroundImage = new BackgroundImage(image, 
-    BackgroundRepeat.NO_REPEAT,        
-    BackgroundRepeat.NO_REPEAT,        
-    BackgroundPosition.CENTER,        
-    new BackgroundSize(100.0, 100.0, true, true, true, false) 
-        );
 
 
 
@@ -153,7 +164,7 @@ public class App extends Application {
 
 
 
-        System.out.println(getClass().getResource("/images/space.jpg"));
+       
 
 
         // Set the title of the stage (window)
