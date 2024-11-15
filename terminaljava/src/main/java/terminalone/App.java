@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
@@ -22,6 +23,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
+import javafx.scene.input.KeyCode;
+
 
 
 public class App extends Application {
@@ -65,13 +68,17 @@ public class App extends Application {
         // Initialize the TextArea
         outputArea = new TextArea();
         outputArea.setEditable(false); 
-        outputArea.setStyle("-fx-background-color: transparent; ");
+        //outputArea.setStyle("-fx-background-color: transparent; ");
+        outputArea.setStyle("-fx-control-inner-background: black; -fx-text-fill: lightgreen; -fx-font-family: 'Consolas'; -fx-font-size: 14px;");
+
         outputArea.setBackground(new Background(backgroundImage));
 
          // Initialize the input field (TextField)
         inputField = new TextField();
         inputField.setPromptText("Enter command here...");
-        inputField.setStyle("-fx-text-fill: white");
+        //inputField.setStyle("-fx-text-fill: white");
+        inputField.setStyle("-fx-background-color: black; -fx-text-fill: white; -fx-font-family: 'Consolas'; -fx-font-size: 14px; -fx-border-color: green; -fx-border-radius: 5;");
+
         inputField.setBackground(new Background(backgroundImage));
 
        
@@ -129,7 +136,7 @@ public class App extends Application {
 
         //button layout 
         VBox buttonLayout = new VBox(10);  
-        buttonLayout.setStyle("-fx-alignment: center; -fx-padding: 10; -fx-background-color: #f0f0f0;");
+        buttonLayout.setStyle("-fx-alignment: center; -fx-padding: 10; -fx-background-color: black; -fx-text-fill-white");
         buttonLayout.getChildren().addAll(CpuShowCase, directoryButton);
 
         VBox root = new VBox(20);       
@@ -149,7 +156,7 @@ public class App extends Application {
 
         StackPane backgroundPane = new StackPane();
         backgroundPane.setBackground(new Background(backgroundImage));
-        backgroundPane.setPrefSize(800, 600); // Set the same size as the scene
+        backgroundPane.setPrefSize(800, 600); 
         root.getChildren().add(backgroundPane);
               
         // Set up the Scene
@@ -246,12 +253,26 @@ public class App extends Application {
         inputField.clear();
     }
 
+
+
+ 
+
     
       // Method to show the current directory
-      public void ShowCurrentDirectory() {
+      public void ShowCurrentDirectory(KeyEvent e) {
         Path currentDirectory = Path.of("").toAbsolutePath(); // Get the current working directory
         outputArea.appendText(currentDirectory.toString() + "\n");
         outputArea.setStyle("-fx-font-size: 15px; -fx-text-fill: pink; -fx-font-weight: bold;");
+
+        if (e.getCode() == KeyCode.UP) {
+            Path parentDirectory = currentDirectory.getParent();
+            if (parentDirectory != null) {
+                currentDirectory = parentDirectory; // Update the current directory
+            } 
+
+            
+            
+        }
     }
 
     //method to create a directory
