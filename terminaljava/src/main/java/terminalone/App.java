@@ -1,5 +1,6 @@
 package terminalone;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 import javafx.application.Application;
@@ -25,6 +26,9 @@ public class App extends Application {
     private TextArea cpuUsageArea; // Declared at the class level
     private long[] oldTicks;
     private Thread cpuMonitorThread;
+
+    //
+    private Path currentDirectory = Path.of("").toAbsolutePath();
 
     @Override
     public void start(Stage primaryStage) {
@@ -52,12 +56,17 @@ public class App extends Application {
         cpuUsageArea = new TextArea();
         cpuUsageArea.setEditable(false);
         
+       
         cpuUsageArea.setStyle("-fx-control-inner-background: black; -fx-text-fill: yellow; -fx-font-family: 'Consolas'; -fx-font-size: 14px;");
-        //Buttons to go through directory
 
+
+        //Buttons to go through directory
         Button ArrowUp = new Button("↑");
         ArrowUp.setOnAction(event -> goUp());
-        
+
+        Button ArrowDown = new Button("");
+        ArrowDown.setOnAction(event -> goBack());
+
 
         // Button to start CPU usage
         Button CpuShowCase = new Button("Cpu Usage");
@@ -97,11 +106,29 @@ public class App extends Application {
     }
     // method to move through the drirectory when the arrow is clicked
 
-    public  void goUp(){
-
-
-
+    public void goUp() {
+        if (currentDirectory.getParent() != null) { // Check if there's a parent directory
+            currentDirectory = currentDirectory.getParent(); // Move to the parent directory
+            outputArea.appendText("Moved up to: " + currentDirectory.toString() + "\n");
+        } else {
+            outputArea.appendText("Already at the root directory.\n");
+        }
     }
+
+    // method to move through the drirectory when the arrow is clicked backwards!
+
+  public void goBack(String subdirectoryName) {
+    Path newDirectory = currentDirectory.resolve(subdirectoryName); // Resolve the new subdirectory path
+    if (Files.isDirectory(newDirectory)) { // Check if the path exists and is a directory
+        currentDirectory = newDirectory; // Navigate into the subdirectory
+        outputArea.appendText("Moved into: " + currentDirectory.toString() + "\n");
+    } else {
+        outputArea.appendText("Subdirectory '" + subdirectoryName + "' does not exist.\n");
+    }
+}
+
+
+
 
     // Showcase CPU usage
     public void startCpuUsageMonitoring(TextArea cpuUsageArea) {
@@ -144,10 +171,9 @@ public class App extends Application {
 
     // Method to show the current directory
     public void ShowCurrentDirectory() {
-        Path currentDirectory = Path.of("").toAbsolutePath(); // Get the current working directory
-        outputArea.appendText(currentDirectory.toString() + "\n");
+        outputArea.appendText("Current Directory: " + currentDirectory.toString() + "\n");
     }
-
+    
     // Method to display a welcome message
     public void Welcome() {
         outputArea.appendText("Welcome to TerminalX\n");
