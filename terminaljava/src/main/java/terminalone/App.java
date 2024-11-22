@@ -53,6 +53,11 @@ public class App extends Application {
         cpuUsageArea.setEditable(false);
         
         cpuUsageArea.setStyle("-fx-control-inner-background: black; -fx-text-fill: yellow; -fx-font-family: 'Consolas'; -fx-font-size: 14px;");
+        //Buttons to go through directory
+
+        Button ArrowUp = new Button("↑");
+        ArrowUp.setOnAction(event -> goUp());
+        
 
         // Button to start CPU usage
         Button CpuShowCase = new Button("Cpu Usage");
@@ -69,7 +74,7 @@ public class App extends Application {
         // Button layout
         VBox buttonLayout = new VBox(10);
         buttonLayout.setStyle("-fx-alignment: center; -fx-padding: 10; -fx-background-color: black; -fx-text-fill: white");
-        buttonLayout.getChildren().addAll(CpuShowCase, directoryButton);
+        buttonLayout.getChildren().addAll(CpuShowCase, directoryButton, ArrowUp);
 
         // Root layout
         VBox root = new VBox(20);
@@ -89,6 +94,13 @@ public class App extends Application {
 
         // Call welcome
         Welcome();
+    }
+    // method to move through the drirectory when the arrow is clicked
+
+    public  void goUp(){
+
+
+
     }
 
     // Showcase CPU usage
